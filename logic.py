@@ -20,13 +20,8 @@ def shuffle(deck):
 
     Returns:
         list of tuples: A shuffled deck of playing cards.
-    """
-    # TO DO (Conor):
-
-    # Hint: 
-        # How might we use the "random" module to shuffle a deck? 
-        # https://docs.python.org/3/library/random.html
-    pass
+    """  
+    return random.shuffle(deck)
 
 
 def card_value(card):

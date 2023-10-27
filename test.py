@@ -5,7 +5,7 @@ class TestShuffleFunction(unittest.TestCase):
 
     def test_shuffle(self):
         # Create a sorted deck
-        sorted_deck = deck()
+        sorted_deck = build_deck()
         
         # Shuffle the sorted deck
         shuffled_deck = shuffle(sorted_deck)
