@@ -29,10 +29,10 @@ def card_value(card):
     Returns:
         int: Value of a single card.
     """
-    # TO DO (Conor):
-
-    # Hint: 
-        # Consider ranks of all cards, i.e. ['2', ...,  '10', 'J', 'Q', 'K', 'A']
-        # The value for some cards are easier than others
-        # Could we use "if elif else" statements?
-    pass
+    rank = card[1]
+    if rank in ['K', 'Q', 'J']:
+        return 10
+    elif rank == 'A':
+        return 11
+    else:
+        return int(rank)

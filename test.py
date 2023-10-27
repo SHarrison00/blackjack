@@ -15,19 +15,19 @@ class TestShuffleFunction(unittest.TestCase):
 
 
     def test_number_card_value(self):
-        card = ('2', 'Hearts') 
+        card = ('Hearts', '2') 
         result = card_value(card)
         self.assertEqual(result, 2)
 
 
     def test_face_card_value(self):
-        card = ('K', 'Spades')
+        card = ('Spades', 'K')
         result = card_value(card)
         self.assertEqual(result, 10)
 
 
     def test_ace_card_value(self):
-        card = ('A', 'Diamonds')
+        card = ('Diamonds', 'A')
         result = card_value(card)
         self.assertEqual(result, 11)    
 
