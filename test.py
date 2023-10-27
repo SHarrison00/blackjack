@@ -14,5 +14,23 @@ class TestShuffleFunction(unittest.TestCase):
         self.assertNotEqual(sorted_deck, shuffled_deck)
 
 
+    def test_number_card_value(self):
+        card = ('2', 'Hearts') 
+        result = card_value(card)
+        self.assertEqual(result, 2)
+
+
+    def test_face_card_value(self):
+        card = ('K', 'Spades')
+        result = card_value(card)
+        self.assertEqual(result, 10)
+
+
+    def test_ace_card_value(self):
+        card = ('A', 'Diamonds')
+        result = card_value(card)
+        self.assertEqual(result, 11)    
+
+
 if __name__ == '__main__':
     unittest.main()
