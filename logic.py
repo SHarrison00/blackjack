@@ -49,6 +49,8 @@ def draw_card(deck):
         tuple: A single card.
     """
     # TO DO: Conor
+
+        # Hint: .pop()
     pass    
 
 
@@ -63,6 +65,7 @@ def draw_initial_hand(deck):
         list: A list containing two cards.
     """
     # TO DO: Conor
+        # Very similar
     pass
 
 
