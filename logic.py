@@ -48,11 +48,8 @@ def draw_card(deck):
     Returns:
         tuple: A single card.
     """
-    # TO DO: Conor
-
-        # Hint: .pop()
-    pass    
-
+    return deck.pop()
+     
 
 def draw_initial_hand(deck):
     """
@@ -64,9 +61,7 @@ def draw_initial_hand(deck):
     Returns:
         list: A list containing two cards.
     """
-    # TO DO: Conor
-        # Very similar
-    pass
+    return [deck.pop(), deck.pop()]
 
 
 def display_player_hand(player_hand):
@@ -76,21 +71,7 @@ def display_player_hand(player_hand):
     Args:
         player_hand (list of tuples): Player's hand, i.e list of card tuples.
     """
-    # TO DO: Conor
-
-    # Example:
-    # --------
-    # Say the player's hand is
-    # player_hand = [('2', 'Hearts'), ('Ace', 'Spades')]
-    
-    # Then the output should be 
-    # display_player_hand(player_hand)
-    # >>> Player's Hand: [('2', 'Hearts'), ('Ace', 'Spades')]
-    
-    # Hint:
-        # See how to combine strings and lists using print().
-        # The solution is simple, and this is not a trick*. 
-    pass
+    print("Player's Hand", player_hand)
 
 
 def display_dealer_hand(dealer_hand, reveal_hole_card=False):
@@ -123,4 +104,9 @@ def display_dealer_hand(dealer_hand, reveal_hole_card=False):
     # Hint:
     # - Use an if-else statement to decide whether to reveal the hole card.
     # - You can print lists directly to display the hand.
-    pass
+    if reveal_hole_card:
+        print("Dealer's Hand", dealer_hand)
+    else:
+        concealed_card = [('??', '??')]
+        visible_cards = concealed_card + dealer_hand[:1]
+        print("Dealer's Hand:", visible_cards)

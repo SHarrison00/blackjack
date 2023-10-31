@@ -14,3 +14,16 @@ print(deck)
 # Next, we might want to draw some cards. Then, we might want to reveal some 
 # cards in the console. Then, we might want the user to make a decision, i.e.
 # hit/stand etc. etc. etc. ...
+print('')
+
+
+player_hand = [('2', 'Hearts'), ('Ace', 'Spades')]
+
+
+display_player_hand(player_hand)
+
+
+dealer_hand = [('2', 'Hearts'), ('Ace', 'Spades')]
+
+
+display_dealer_hand(dealer_hand, reveal_hole_card=False)
