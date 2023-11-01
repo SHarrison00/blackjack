@@ -2,28 +2,16 @@ from logic import *
 
 deck = build_deck()
 
-print(deck)
-
-# TO DO: Conor
-    # Challenge: Start to implement Blackjack in the console.
-
-# For example, you might want to keep start above. 
-# 
-# I think this is ok for now.
-#
-# Next, we might want to draw some cards. Then, we might want to reveal some 
-# cards in the console. Then, we might want the user to make a decision, i.e.
-# hit/stand etc. etc. etc. ...
 print('')
 
-
 player_hand = [('2', 'Hearts'), ('Ace', 'Spades')]
-
+# This is an example of a player's hand i.e. a list of tuples
 
 display_player_hand(player_hand)
-
+# This gives us the player's hand in the console
 
 dealer_hand = [('2', 'Hearts'), ('Ace', 'Spades')]
-
+# This is an example of a dealer's hand "" ""
 
 display_dealer_hand(dealer_hand, reveal_hole_card=False)
+# This gives us the dealers hand which shows one card (hole card) as ?? ?? (facing down)
