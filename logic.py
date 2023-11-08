@@ -60,7 +60,8 @@ def hand_value(hand):
         # Update the total_value by adding the card's value
         total_value += card_val
         # Check if the card is an 'Ace' and update ace_count accordingly
-            # TODO: Conor ...
+        if card[1] == 'A':
+            ace_count += 1
 
     # In this 'while' loop:
     # Check if there are 'Ace' cards in the hand (ace_count > 0)
@@ -70,8 +71,8 @@ def hand_value(hand):
         # - Deduct 10 from total_value, i.e change the value of 'Ace' from 11 to 1
         # - Decrement ace_count for each 'Ace' adjusted
             # TODO: Conor ...
-        pass
-
+        total_value -= 10
+        ace_count -= 1
     return total_value
 
     
@@ -127,7 +128,7 @@ def display_dealer_hand(dealer_hand, reveal_hole_card=False):
         print("Dealer's Hand:", visible_cards)
 
 
-def get_user_decision():
+def ask_user_hit_or_stand():
     """
     Get the user's decision in the game, whether to "Hit" or "Stand".
 
@@ -140,11 +141,17 @@ def get_user_decision():
 
         # Check if the user's input is valid (either "hit" or "stand")
         if user_input == "hit":
-            # TODO: Implement the code for "Hit" choice here
-            pass
+            return "Hit"
         elif user_input == "stand":
-            # TODO: Implement the code for "Stand" choice here
-            pass
+            return "Stand"
         else:
             # If the input is not valid, prompt the user again
             print("Invalid input. Please enter 'Hit' or 'Stand'.")
+
+
+def ask_user_insurance():
+    pass
+
+
+def ask_user_response():
+    pass
