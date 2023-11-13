@@ -35,7 +35,8 @@ def card_value(card):
     elif rank == 'A':
         return 11
     else:
-        return int(rank)
+        numerical_value = rank if rank.isdigit() else 10
+        return int(numerical_value)
     
 
 def hand_value(hand):
@@ -150,8 +151,56 @@ def ask_user_hit_or_stand():
 
 
 def ask_user_insurance():
-    pass
+    """
+    Get the user's decision in the game, whether to "Insurance" or "No Insurance".
+
+    returns:
+        str: The user's decision, either "Insurance" or "No Insurance".
+    """
+    while True:
+        # Use input() to get user input
+        user_input = input("Do you want 'Insurance' or 'No Insurance'? ").strip().lower()
+
+        # Check if the user's input is valid (either "insurance" or "no insurance")
+        if user_input == "insurance":
+            return "Insurance"
+        elif user_input == "no insurance":
+            return "No Insurance"
+        else:
+            print("Invalid input. Please enter 'Insurance' or 'No Insurance'.")
 
 
 def ask_user_response():
     pass
+
+
+def check_for_blackjack(hand):
+    """
+    Check if a hand is blackjack.
+
+    Args:
+        hand (list of tuples): The Player's hand, i.e. list of card tuples.
+
+    Returns:
+        bool: True if the hand is blackjack, False if not.
+    """
+    # Check if the hand has exactly 2 cards
+    if len(hand) == 2:
+        # Check if one card is an Ace and the other is a 10 point card
+        if ('A' in hand[0] or hand[0][1] == '10') and ('A' in hand[1] or hand[1][1] == '10'):
+            return True
+    return False
+
+
+def check_for_bust(hand):
+    """
+    Check if the hand is over 21 (bust)
+
+    Args:
+        hand (list of tuples): the player's hand, i.e. list of card tuples.
+
+    Returns:
+        bool: True if the hand is busted, False if not.
+    """
+    total_value = hand_value(hand)
+    return total_value > 21
