@@ -179,15 +179,16 @@ def check_for_blackjack(hand):
     Check if a hand is blackjack.
 
     Args:
-        hand (list of tuples): The Player's hand, i.e. list of card tuples.
+        hand (list of tuples): The Player's hand, i.e., a list of card tuples.
 
     Returns:
         bool: True if the hand is blackjack, False if not.
     """
-    # Check if the hand has exactly 2 cards
-    if len(hand) == 2:
-        # Check if one card is an Ace and the other is a 10 point card
-        if ('A' in hand[0] or hand[0][1] == '10') and ('A' in hand[1] or hand[1][1] == '10'):
+    # Check if the hand has exactly 2 cards and one of them is an Ace
+    if len(hand) == 2 and any(card[1] == 'A' for card in hand):
+        # Check if the other card is a 10-point card or a face card
+        other_card_rank = hand[0][1] if hand[1][1] == 'A' else hand[1][1]
+        if other_card_rank in ['10', 'J', 'Q', 'K']:
             return True
     return False
 
