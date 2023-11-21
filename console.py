@@ -34,7 +34,13 @@ if user_decision == "Hit":
     player_value = hand_value(player_hand)
     print(f"Player's hand value: {player_value}")
 
-if check_for_bust(player_hand):
-    print("Player busted!")
+    # Check for player bust
+    if check_for_bust(player_hand):
+        print("Player busted!")
+
+# Dealer's turn
+dealer_turn(deck, dealer_hand)
+
+# Check for dealer bust
 if check_for_bust(dealer_hand):
     print("Dealer busted!")

@@ -205,3 +205,22 @@ def check_for_bust(hand):
     """
     total_value = hand_value(hand)
     return total_value > 21
+
+
+def dealer_turn(deck, dealer_hand):
+    """
+    Play the Dealer's hand.
+
+    Args:
+        deck (list of tuples): The deck of playing cards
+        dealer_hand (list of tuples): Dealers's hand i.e. list of card tuples.
+    """
+    # Reveal the dealer's hole card
+    display_dealer_hand(dealer_hand, reveal_hole_card=True)
+
+    # The dealer draws cards until the hand value is at least 17
+    while hand_value(dealer_hand) < 17:
+        dealer_hand.append(draw_card(deck))
+        display_dealer_hand(dealer_hand, reveal_hole_card=True)
+
+    print("Dealer Stands.")
