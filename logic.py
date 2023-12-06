@@ -171,7 +171,9 @@ def ask_user_insurance():
 
 
 def ask_user_response():
+    
     pass
+
 
 
 def check_for_blackjack(hand):
@@ -224,3 +226,29 @@ def dealer_turn(deck, dealer_hand):
         display_dealer_hand(dealer_hand, reveal_hole_card=True)
 
     print("Dealer Stands.")
+
+
+def determine_winner(player_hand, dealer_hand):
+    """
+    Determine the winner of the game based on both player's and dealer's hands
+
+    Args:
+        player_hand (list of tuples): the player's hand.
+        dealer_hand (list of tuples): the dealer's hand.
+    """
+    player_value = hand_value(player_hand)
+    dealer_value = hand_value(dealer_hand)
+
+    print(f"\nPlayer's hand value: {player_value}")
+    print(f"Dealer's hand value: {dealer_value}")
+
+    if check_for_bust(player_hand):
+        print("Player Busted! Dealer Wins.")
+    elif check_for_bust(dealer_hand):
+        print("Dealer Busted! Player Wins.")
+    elif player_value > dealer_value:
+        print("Player Wins!")
+    elif dealer_value > player_value:
+        print("Dealer Wins!")
+    else:
+        print("Push!")
