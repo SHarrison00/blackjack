@@ -150,30 +150,71 @@ def ask_user_hit_or_stand():
             print("Invalid input. Please enter 'Hit' or 'Stand'.")
 
 
-def ask_user_insurance():
+def ask_user_insurance(dealer_hand):
     """
     Get the user's decision in the game, whether to "Insurance" or "No Insurance".
+
+    Args:
+        dealer_hand (list of tuples): The dealer's hand.
 
     returns:
         str: The user's decision, either "Insurance" or "No Insurance".
     """
-    while True:
-        # Use input() to get user input
-        user_input = input("Do you want 'Insurance' or 'No Insurance'? ").strip().lower()
-
-        # Check if the user's input is valid (either "insurance" or "no insurance")
-        if user_input == "insurance":
-            return "Insurance"
-        elif user_input == "no insurance":
-            return "No Insurance"
-        else:
-            print("Invalid input. Please enter 'Insurance' or 'No Insurance'.")
-
-
-def ask_user_response():
+    dealer_upcard = dealer_hand[0]
     
-    pass
+    if dealer_upcard[1] == 'A':
+        while True:
+            # Use input() to get user input
+            user_input = input("Do you want 'Insurance' or 'No Insurance'? ").strip().lower()
 
+            # Check if the user's input is valid (either "insurance" or "no insurance")
+            if user_input == "insurance":
+                return "Insurance"
+            elif user_input == "no insurance":
+                return "No Insurance"
+            else:
+                print("Invalid input. Please enter 'Insurance' or 'No Insurance'.")
+    else:
+        return None
+
+def ask_user_response(dealer_hand):
+    """
+    Get the user's decision in the game.
+
+    Args:
+        dealer_hand (list of tuples): The dealer's hand.
+
+    Returns:
+        str: The user's decision, either "Insurance", "No Insurance", "Hit" or "Stand".
+    """
+    # Check for insurance first
+    dealer_upcard = dealer_hand[0]
+    
+    if dealer_upcard[1] == 'A':
+        while True:
+            # Use input() to get user input
+            user_input = input("Do you want 'Insurance' or 'No Insurance'? ").strip().lower()
+
+            # Check if the user's input is valid (either "insurance" or "no insurance")
+            if user_input == "insurance":
+                return "Insurance"
+            elif user_input == "no insurance":
+                return "No Insurance"
+            else:
+                print("Invalid input. Please enter 'Insurance' or 'No Insurance'.")
+    else:
+        while True:
+            # Use input() to get user input
+            user_input = input("Do you want to 'Hit' or 'Stand'? ").strip().lower()
+
+            # Check if the user's input is valid (either "hit" or "stand")
+            if user_input == "hit":
+                return "Hit"
+            elif user_input == "stand":
+                return "Stand"
+            else:
+                # If the input is not valid, prompt the user again
+                print("Invalid input. Please enter 'Hit' or 'Stand'.")
 
 
 def check_for_blackjack(hand):
