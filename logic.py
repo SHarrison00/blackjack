@@ -175,46 +175,7 @@ def ask_user_insurance(dealer_hand):
             else:
                 print("Invalid input. Please enter 'Insurance' or 'No Insurance'.")
     else:
-        return None
-
-def ask_user_response(dealer_hand):
-    """
-    Get the user's decision in the game.
-
-    Args:
-        dealer_hand (list of tuples): The dealer's hand.
-
-    Returns:
-        str: The user's decision, either "Insurance", "No Insurance", "Hit" or "Stand".
-    """
-    # Check for insurance first
-    dealer_upcard = dealer_hand[0]
-    
-    if dealer_upcard[1] == 'A':
-        while True:
-            # Use input() to get user input
-            user_input = input("Do you want 'Insurance' or 'No Insurance'? ").strip().lower()
-
-            # Check if the user's input is valid (either "insurance" or "no insurance")
-            if user_input == "insurance":
-                return "Insurance"
-            elif user_input == "no insurance":
-                return "No Insurance"
-            else:
-                print("Invalid input. Please enter 'Insurance' or 'No Insurance'.")
-    else:
-        while True:
-            # Use input() to get user input
-            user_input = input("Do you want to 'Hit' or 'Stand'? ").strip().lower()
-
-            # Check if the user's input is valid (either "hit" or "stand")
-            if user_input == "hit":
-                return "Hit"
-            elif user_input == "stand":
-                return "Stand"
-            else:
-                # If the input is not valid, prompt the user again
-                print("Invalid input. Please enter 'Hit' or 'Stand'.")
+        return
 
 
 def check_for_blackjack(hand):
@@ -250,21 +211,24 @@ def check_for_bust(hand):
     return total_value > 21
 
 
-def dealer_turn(deck, dealer_hand):
+def playout_dealer_hand(deck, dealer_hand):
     """
-    Play the Dealer's hand.
+    Conor add a better desc.
 
     Args:
         deck (list of tuples): The deck of playing cards
         dealer_hand (list of tuples): Dealers's hand i.e. list of card tuples.
     """
-    # Reveal the dealer's hole card
+    # Reveal dealer's hole card
     display_dealer_hand(dealer_hand, reveal_hole_card=True)
 
-    # The dealer draws cards until the hand value is at least 17
+    # Dealer draws cards until hand value is at least 17
     while hand_value(dealer_hand) < 17:
         dealer_hand.append(draw_card(deck))
         display_dealer_hand(dealer_hand, reveal_hole_card=True)
+
+        if check_for_bust(dealer_hand):
+            print("Dealer Busted!")
 
     print("Dealer Stands.")
 
