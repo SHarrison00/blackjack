@@ -1,259 +1,82 @@
-from itertools import product
+from enum import Enum
+
+class Suit(Enum):
+    HEARTS = 'Hearts'
+    DIAMONDS = 'Diamonds'
+    CLUBS = 'Clubs'
+    SPADES = 'Spades'
+
+class Rank(Enum):
+    TWO = '2'
+    THREE = '3'
+    FOUR = '4'
+    FIVE = '5'
+    SIX = '6'
+    SEVEN = '7'
+    EIGHT = '8'
+    NINE = '9'
+    TEN = '10'
+    JACK = 'Jack'
+    QUEEN = 'Queen'
+    KING = 'King'
+    ACE = 'Ace'
+
 import random
 
-def build_deck():
-    """
-    Create a deck of playing cards.
+class Card:
+    def __init__(self, suit, rank):
+        self.suit = suit
+        self.rank = rank
+    
+    def __str__(self):
+        return f"{self.rank.value} of {self.suit.value}
 
-    Returns:
-        list of tuples: A deck of playing cards.
-    """
-    suits = ['Hearts', 'Spades', 'Diamonds', 'Clubs']
-    ranks = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A']
-    deck = list(product(suits, ranks))
-    return deck
-
-
-def shuffle(deck):
-    """
-    Shuffle a deck of playing cards.
-
-    Returns:
-        list of tuples: A shuffled deck of playing cards.
-    """  
-    return random.shuffle(deck)
-
-
-def card_value(card):
-    """
-    Returns:
-        int: Value of a single card.
-    """
-    rank = card[1]
-    if rank in ['K', 'Q', 'J']:
-        return 10
-    elif rank == 'A':
-        return 11
-    else:
-        numerical_value = rank if rank.isdigit() else 10
-        return int(numerical_value)
+class Deck:
+    def __init__(self):
+        self.cards = [Card(suit, rank) for suit in Suit for rank in Rank]
+    
+    def shuffle(self):
+        random.shuffle(self.cards)
+    
+    def deal_card(self):
+        if not self.is_empty():
+            return self.cards.pop()
+    
+    def is_empty(self):
+        return len(self.cards) == 0
     
 
-def hand_value(hand):
-    """
-    Calculate the value of a hand in Blackjack.
+class Player:
+    def __init__(self, name):
+        self.name = name 
+        self.hand = []
 
-    Args:
-        hand (list of tuples): The player's hand, i.e., a list of card tuples.
-
-    Returns:
-        int: The value of the hand.
-    """
-    # Initialize the total value of the hand
-    total_value = 0  
-    # Initialize count for 'Ace' cards in hand
-    ace_count = 0
-
-    # Calculate the value of each card in the hand using card_value function
-    for card in hand:
-        # Calculate the value of the current card using the card_value function
-        card_val = card_value(card)
-        # Update the total_value by adding the card's value
-        total_value += card_val
-        # Check if the card is an 'Ace' and update ace_count accordingly
-        if card[1] == 'A':
-            ace_count += 1
-
-    # In this 'while' loop:
-    # Check if there are 'Ace' cards in the hand (ace_count > 0)
-    # and if the total_value exceeds 21 (total_value > 21)
-    while ace_count > 0 and total_value > 21:
-        # If both conditions are met, adjust the value of 'Ace' cards:
-        # - Deduct 10 from total_value, i.e change the value of 'Ace' from 11 to 1
-        # - Decrement ace_count for each 'Ace' adjusted
-            # TODO: Conor ...
-        total_value -= 10
-        ace_count -= 1
-    return total_value
-
+    def add_card_to_hand(self, card):
+        self.hand.append(card)
     
-def draw_card(deck):
-    """
-    Draw a single card from the deck.
+    def get_hand_value(self):
+        total_value = 0
+        num_aces = 0
 
-    Args:
-        deck (list of tuples): The deck of playing cards.
-
-    Returns:
-        tuple: A single card.
-    """
-    return deck.pop()
-     
-
-def draw_initial_hand(deck):
-    """
-    Draw an initial hand of two cards from the deck.
-
-    Args:
-        deck (list of tuples): The deck of playing cards.
-
-    Returns:
-        list: A list containing two cards.
-    """
-    return [deck.pop(), deck.pop()]
-
-
-def display_player_hand(player_hand):
-    """
-    Display the player's hand.
-
-    Args:
-        player_hand (list of tuples): Player's hand, i.e list of card tuples.
-    """
-    print("Player's Hand", player_hand)
-
-
-def display_dealer_hand(dealer_hand, reveal_hole_card=False):
-    """
-    Display the dealer's hand.
-
-    Args:
-        dealer_hand (list of tuples): Dealer's hand, i.e. list of card tuples.
-        reveal_hole_card (bool, optional): Whether to reveal the hole card.
-    """
-    if reveal_hole_card:
-        print("Dealer's Hand", dealer_hand)
-    else:
-        concealed_card = [('??', '??')]
-        visible_cards = concealed_card + dealer_hand[:1]
-        print("Dealer's Hand:", visible_cards)
-
-
-def ask_user_hit_or_stand():
-    """
-    Get the user's decision in the game, whether to "Hit" or "Stand".
-
-    Returns:
-        str: The user's decision, either "Hit" or "Stand".
-    """
-    while True:
-        # Use input() to get user input
-        user_input = input("Do you want to 'Hit' or 'Stand'? ").strip().lower()
-
-        # Check if the user's input is valid (either "hit" or "stand")
-        if user_input == "hit":
-            return "Hit"
-        elif user_input == "stand":
-            return "Stand"
-        else:
-            # If the input is not valid, prompt the user again
-            print("Invalid input. Please enter 'Hit' or 'Stand'.")
-
-
-def ask_user_insurance(dealer_hand):
-    """
-    Get the user's decision in the game, whether to "Insurance" or "No Insurance".
-
-    Args:
-        dealer_hand (list of tuples): The dealer's hand.
-
-    returns:
-        str: The user's decision, either "Insurance" or "No Insurance".
-    """
-    dealer_upcard = dealer_hand[0]
-    
-    if dealer_upcard[1] == 'A':
-        while True:
-            # Use input() to get user input
-            user_input = input("Do you want 'Insurance' or 'No Insurance'? ").strip().lower()
-
-            # Check if the user's input is valid (either "insurance" or "no insurance")
-            if user_input == "insurance":
-                return "Insurance"
-            elif user_input == "no insurance":
-                return "No Insurance"
+        for card in self.hand
+            # For numbered cards (2-10), use their numeric value
+            if card.rank in (Rank.TWO, Rank.THREE, Rank.FOUR, Rank.FIVE, Rank.SIX, Rank.SEVEN, Rank.EIGHT, Rank.NINE, Rank.TEN):
+                total_value += int(card.rank.value)
+            # For face cards (Jack, Queen, King), use a value of 10
+            elif card.rank in (Rank.JACK, Rank.QUEEN, Rank.KING):
+                total_value += 10
+            # For Aces, keep track on the number and decide on their value later
+            elif card.rank == Rank.ACE:
+                num_aces += 1
+        
+        # Add the value of Aces based on the current total value
+        for _ in range(num_aces):
+            # If adding 11 doesn't bust, use 11; otherwise use 1
+            if total_value + 11 <= 21:
+                total_value += 11
             else:
-                print("Invalid input. Please enter 'Insurance' or 'No Insurance'.")
-    else:
-        return
+                total_value += 1
+
+        return total_value
 
 
-def check_for_blackjack(hand):
-    """
-    Check if a hand is blackjack.
-
-    Args:
-        hand (list of tuples): The Player's hand, i.e., a list of card tuples.
-
-    Returns:
-        bool: True if the hand is blackjack, False if not.
-    """
-    # Check if the hand has exactly 2 cards and one of them is an Ace
-    if len(hand) == 2 and any(card[1] == 'A' for card in hand):
-        # Check if the other card is a 10-point card or a face card
-        other_card_rank = hand[0][1] if hand[1][1] == 'A' else hand[1][1]
-        if other_card_rank in ['10', 'J', 'Q', 'K']:
-            return True
-    return False
-
-
-def check_for_bust(hand):
-    """
-    Check if the hand is over 21 (bust)
-
-    Args:
-        hand (list of tuples): the player's hand, i.e. list of card tuples.
-
-    Returns:
-        bool: True if the hand is busted, False if not.
-    """
-    total_value = hand_value(hand)
-    return total_value > 21
-
-
-def playout_dealer_hand(deck, dealer_hand):
-    """
-    Conor add a better desc.
-
-    Args:
-        deck (list of tuples): The deck of playing cards
-        dealer_hand (list of tuples): Dealers's hand i.e. list of card tuples.
-    """
-    # Reveal dealer's hole card
-    display_dealer_hand(dealer_hand, reveal_hole_card=True)
-
-    # Dealer draws cards until hand value is at least 17
-    while hand_value(dealer_hand) < 17:
-        dealer_hand.append(draw_card(deck))
-        display_dealer_hand(dealer_hand, reveal_hole_card=True)
-
-        if check_for_bust(dealer_hand):
-            print("Dealer Busted!")
-
-    print("Dealer Stands.")
-
-
-def determine_winner(player_hand, dealer_hand):
-    """
-    Determine the winner of the game based on both player's and dealer's hands
-
-    Args:
-        player_hand (list of tuples): the player's hand.
-        dealer_hand (list of tuples): the dealer's hand.
-    """
-    player_value = hand_value(player_hand)
-    dealer_value = hand_value(dealer_hand)
-
-    print(f"\nPlayer's hand value: {player_value}")
-    print(f"Dealer's hand value: {dealer_value}")
-
-    if check_for_bust(player_hand):
-        print("Player Busted! Dealer Wins.")
-    elif check_for_bust(dealer_hand):
-        print("Dealer Busted! Player Wins.")
-    elif player_value > dealer_value:
-        print("Player Wins!")
-    elif dealer_value > player_value:
-        print("Dealer Wins!")
-    else:
-        print("Push!")
