@@ -29,7 +29,7 @@ class Card:
         self.rank = rank
     
     def __str__(self):
-        return f"{self.rank.value} of {self.suit.value}
+        return f"{self.rank.value} of {self.suit.value}"
 
 class Deck:
     def __init__(self):
@@ -58,7 +58,12 @@ class Player:
         total_value = 0
         num_aces = 0
 
-        for card in self.hand
+        # Check for blackjack
+        if len(self.hand) == 2:
+            if any(card.rank == Rank.ACE for card in self.hand) and any(card.rank in (Rank.JACK, Rank.QUEEN, Rank.KING) for card in self.hand):
+                return 21 # Blackjack!
+            
+        for card in self.hand:
             # For numbered cards (2-10), use their numeric value
             if card.rank in (Rank.TWO, Rank.THREE, Rank.FOUR, Rank.FIVE, Rank.SIX, Rank.SEVEN, Rank.EIGHT, Rank.NINE, Rank.TEN):
                 total_value += int(card.rank.value)
