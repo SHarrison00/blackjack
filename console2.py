@@ -22,11 +22,6 @@ def start_round():
         # Check for the dealer's upcard being an Ace
         if dealer_hand[0][1] == 'A':
             insurance_decision = offer_insurance()
-            
-            if insurance_decision:
-                print("Insurance taken!") # Reminder to implement logic for insurance and payout later!
-            else:
-                print("No insurance taken.")
 
     # Players Turn
     result = player_turn(deck, player_hand)
