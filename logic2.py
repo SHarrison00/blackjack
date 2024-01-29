@@ -53,3 +53,39 @@ def draw_hand(deck):
 
 def check_for_blackjack(hand):
     return len(hand) == 2 and hand_value(hand) == 21
+
+
+class InsuranceOption(Enum):
+    YES = "YES"
+    NO = "NO"
+
+def offer_insurance():
+    while True:
+        decision = input("The dealer's upcard is an Ace. Do you want to take insurance? (yes/no) ").upper()
+        if decision == InsuranceOption.YES.value:
+            return True
+        elif decision == InsuranceOption.NO.value:
+            return False
+        else:
+            print("Invalid input. Please enter 'yes' or 'no'.")
+
+
+def player_turn(deck, player_hand):
+    while True:
+        print("Player's Hand:", player_hand)
+
+        if hand_value(player_hand) == 21:
+            print("You have 21!")
+            return None
+        
+        decision = input("Do you want to hit or stand? ").lower()
+
+        if decision == 'hit':
+            player_hand.append(draw_card(deck))
+            if hand_value(player_hand) > 21:
+                print("Bust! You went over 21.")
+                return "BUST"
+        elif decision == 'stand':
+            return None
+        else:
+            print("Invalid input. Please enter 'hit' or 'stand'.")
