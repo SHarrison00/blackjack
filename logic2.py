@@ -3,8 +3,11 @@ import random
 from enum import Enum
 
 class RoundOutcome(Enum):
+    DEALER_WIN = "DEALER_WIN"
+    PLAYER_WIN = "PLAYER_WIN"
     PUSH = "PUSH"
     PLAYER_BLACKJACK = "PLAYER_BLACKJACK"
+    DEALER_BLACKJACK = "DEALER_BLACKJACK"
 
 def generate_deck():
     suits = ['Hearts', 'Spades', 'Diamonds', 'Clubs']
@@ -61,7 +64,7 @@ class InsuranceOption(Enum):
 
 def offer_insurance():
     while True:
-        decision = input("The dealer's upcard is an Ace. Do you want to take insurance? (yes/no) ").upper()
+        decision = input("The dealer's upcard is an Ace. Do you want to take insurance? (yes/no) ").lower()
         if decision == InsuranceOption.YES.value:
             return True
         elif decision == InsuranceOption.NO.value:
@@ -70,22 +73,36 @@ def offer_insurance():
             print("Invalid input. Please enter 'yes' or 'no'.")
 
 
-def player_turn(deck, player_hand):
+def ask_player_for_hit():
     while True:
-        print("Player's Hand:", player_hand)
-
-        if hand_value(player_hand) == 21:
-            print("You have 21!")
-            return None
-        
-        decision = input("Do you want to hit or stand? ").lower()
-
+        decision = input("Do you want to hit or stand?").lower()
         if decision == 'hit':
-            player_hand.append(draw_card(deck))
-            if hand_value(player_hand) > 21:
-                print("Bust! You went over 21.")
-                return "BUST"
+            return True
         elif decision == 'stand':
-            return None
+            return False
         else:
             print("Invalid input. Please enter 'hit' or 'stand'.")
+
+
+def check_for_bust(hand):
+    return hand_value(hand) > 21
+
+
+def determine_winner(player_hand, dealer_hand):
+    player_value = hand_value(player_hand)
+    dealer_value = hand_value(dealer_hand)
+
+    if check_for_blackjack(player_hand):
+        return RoundOutcome.PLAYER_BLACKJACK
+    elif check_for_blackjack(dealer_hand):
+        return RoundOutcome.DEALER_BLACKJACK
+    elif check_for_bust(player_value):
+        return RoundOutcome.DEALER_WIN
+    elif check_for_bust(dealer_value):
+        return RoundOutcome.PLAYER_WIN
+    elif player_value == dealer_value:
+        return RoundOutcome.PUSH
+    else:
+        return RoundOutcome.PLAYER_WIN if player_value > dealer_value else RoundOutcome.DEALER_WIN
+
+
