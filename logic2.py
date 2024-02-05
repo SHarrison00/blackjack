@@ -64,7 +64,7 @@ class InsuranceOption(Enum):
 
 def offer_insurance():
     while True:
-        decision = input("The dealer's upcard is an Ace. Do you want to take insurance? (yes/no) ").lower()
+        decision = input("The dealer's upcard is an Ace. Do you want to take insurance? (yes/no) ").upper()
         if decision == InsuranceOption.YES.value:
             return True
         elif decision == InsuranceOption.NO.value:
@@ -84,8 +84,8 @@ def ask_player_for_hit():
             print("Invalid input. Please enter 'hit' or 'stand'.")
 
 
-def check_for_bust(hand):
-    return hand_value(hand) > 21
+def check_for_bust(hand_value):
+    return hand_value > 21
 
 
 def determine_winner(player_hand, dealer_hand):
