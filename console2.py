@@ -10,7 +10,10 @@ def start_round():
         
     print("Player's Hand:", player_hand)
     print("Dealer's Hand:", [dealer_hand[0], '??'])
-        
+
+    result = None # Initialize variables
+    insurance_option = None
+
     # Check if the player has a blackjack
     if check_for_blackjack(player_hand):
         if check_for_blackjack(dealer_hand):
@@ -25,6 +28,7 @@ def start_round():
             insurance_decision = offer_insurance()
             if insurance_decision:
                 print("Insurance taken!")
+                insurance_option = InsuranceOption.YES
                 if check_for_blackjack(dealer_hand):
                     print("Dealer has blackjack! Insurance payout.") # reminded to implement insurance logic later!
                     result = RoundOutcome.DEALER_BLACKJACK
@@ -32,7 +36,8 @@ def start_round():
                     print("Dealer does not have blackjack. No insurance payout.")
             else:
                 print("No insurance taken.")
-                    
+                insurance_option = InsuranceOption.NO
+
     # Player's turn
     while ask_player_for_hit():
         player_hand.append(draw_card(deck))
@@ -47,34 +52,39 @@ def start_round():
         if check_for_bust(hand_value(player_hand)):
             print("Player Bust! Dealer wins")
             result = RoundOutcome.DEALER_WIN
+            break
+
+    print("Player stands.")
+
+    if result is None:
+        #Dealer's turn
+        print("Dealer's Hand:", dealer_hand)
         
-        print("Player stands.")
+        while hand_value(dealer_hand) < 17:
+            dealer_hand.append(draw_card(deck))
+            print("Dealer hits:", dealer_hand)
 
-    #Dealer's turn
-    print("Dealer's Hand:", dealer_hand)
-    while hand_value(dealer_hand) < 17 and not check_for_bust(hand_value(player_hand)):
-        dealer_hand.append(draw_card(deck))
-        print("Dealer hits:", dealer_hand)
-
-    if check_for_bust(hand_value(dealer_hand)):
-        print("Deealer busts! Player wins.")
-        result = RoundOutcome.PLAYER_WIN
-    else:    
-        print("Dealer stands.")
-
-        # Determine winner
-        result = determine_winner(player_hand, dealer_hand)
-        print("Round Outcome:", result)
+        if check_for_bust(hand_value(dealer_hand)):
+            print("Dealer busts! Player wins.")
+            result = RoundOutcome.PLAYER_WIN
+        elif hand_value(player_hand) == hand_value(dealer_hand):
+            print("Push! Both Player and Dealer have the same hand value")
+            result = RoundOutcome.PUSH
+        elif hand_value(player_hand) > hand_value(dealer_hand):
+            print("Player wins!")
+            result = RoundOutcome.PLAYER_WIN
+        else:
+            print("Dealer wins!")
+            result = RoundOutcome.DEALER_WIN
     
-    if result in [RoundOutcome.DEALER_WIN, RoundOutcome.PLAYER_WIN, RoundOutcome.PUSH, RoundOutcome.PLAYER_BLACKJACK, RoundOutcome.DEALER_BLACKJACK]:
-        play_again = input("Do you want to play again? (yes/no)").lower()
-        if play_again == 'yes':
-            start_round()
+    if insurance_option is None:
+        insurance_option = InsuranceOption.NO
         
-    return result
+    return (result, insurance_option)
     
 if __name__ == "__main__":
-        start_round()
+        result, insurance_option = start_round()
+        print("Round Result:", result, insurance_option)
 
         # Note: When exiting start_round(), think about combining the Enums for
         # RoundOutcome() & Insurance() somehow to dictate what happens next... 
