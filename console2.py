@@ -86,6 +86,4 @@ if __name__ == "__main__":
         result, insurance_option = start_round()
         print("Round Result:", result, insurance_option)
 
-        # Note: When exiting start_round(), think about combining the Enums for
-        # RoundOutcome() & Insurance() somehow to dictate what happens next... 
         

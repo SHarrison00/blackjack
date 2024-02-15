@@ -1,36 +1,39 @@
 from enum import Enum
 import random
-
-class RoundOutcome(Enum):  # Import these classes! ... Have a read about "what an import is"... 
-    DEALER_WIN = "DEALER_WIN"
-    PLAYER_WIN = "PLAYER_WIN"
-    PUSH = "PUSH"
-    PLAYER_BLACKJACK = "PLAYER_BLACKJACK"
-    DEALER_BLACKJACK = "DEALER_BLACKJACK"
-
-class InsuranceOption(Enum): # Import these classes! ... 
-    YES = "YES"
-    NO = "NO"
-
-
-
-
-def start_round(): # This function lives in a different file ... i.e. import from wherever ... 
-    """Return [RoundOutcome, InsuranceOption]"""
-
-    return RoundOutcome.DEALER_BLACKJACK, InsuranceOption.NO
+from logic2 import RoundOutcome, InsuranceOption
+from console2 import start_round
 
 
 def ask_player_stake(bankroll):
-    # Fixed number of possible stakes
-    # Make sure don't go past zero bankroll
-    return 1 # Stake always 1 
+    # Defining the list of possible stake options
+    available_stakes = [1, 2, 5, 10, 20, 50, 100]
+
+    # Ask the player to choose from the available options
+    while True:
+        print(f"Your current bankroll is {bankroll}. Choose your stake:")
+        print(", ".join(map(str, available_stakes)))
+        try:
+            stake = int(input("Enter your stake: "))
+            if stake not in available_stakes:
+                print("Invalid stake. Please choose from the available options.")
+            elif stake > bankroll:
+                print("You cannot stake more than your bankroll.")
+            else:
+                return stake
+        except ValueError:
+            print("Invalid input. Please enter a valid integer.")
 
 
 def ask_player_end_game():
-    return True # True == don't play again. False == play again
-
-
+    while True:
+        choice = input("Do you want to play again? (yes/no): ").strip().lower()
+        if choice in ['yes', 'y']:
+            return False
+        elif choice in ['no', 'n']:
+            return True
+        else:
+            print("Invalid input. Please enter 'yes' or 'no'.")
+    
 
 def play():
 
@@ -39,36 +42,39 @@ def play():
     
     while bankroll > 0 and end_game_flag == False:
 
-        stake = ask_player_stake(bankroll) # Ask player stake, should "know" bankroll
+        stake = ask_player_stake(bankroll)
 
         outcome, insur_decision = start_round()
         print(f"Outcome: {outcome}, Insurance: {insur_decision}")
 
-        # Decide what happens next
-            # Update bankroll
-            # Ask user player again?
-                # If yes: do nothing
-                # If no: change end_game_flag to True
-            # Think about about Insurance!!!
-        
-        # For example, let's update the bankroll...
-
-
+        # Update bankroll based on outcome
         if outcome == RoundOutcome.DEALER_BLACKJACK:
-            bankroll -= stake
+            if insur_decision == InsuranceOption.YES:
+                bankroll += stake * 2 # Insurance payout is 2:1
+            else:
+                bankroll -= stake
         elif outcome == RoundOutcome.PLAYER_BLACKJACK:
+            bankroll += stake * 1.5 # Blackjack payout for player is 3:2
+        elif outcome == RoundOutcome.PLAYER_WIN:
             bankroll += stake
-        else:
-            # Add more checks here, for each outcome... 
+        elif outcome == RoundOutcome.DEALER_WIN:
+            bankroll -= stake
+        elif outcome == RoundOutcome.PUSH:
+            # In case of a push, stake is returned to the player
             pass
+        elif insur_decision == InsuranceOption.YES:
+            bankroll -= stake/2 # Player loses half of the insurance bet if dealer does not have blackjack
         
+        # Check if bankroll is zero
+        if bankroll <= 0:
+            print("You have run out of money. Game over!")
+            break
+
         print(f"Bankroll: {bankroll}")
 
         end_game_flag = ask_player_end_game()
         
     print("Thank you for playing!")
-
-
 
 # Play the game..
 play()
