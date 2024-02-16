@@ -22,6 +22,7 @@ def start_round():
         else:
             print("Player has blackjack! Player wins")
             result = RoundOutcome.PLAYER_BLACKJACK
+            return result, insurance_option
     else:
         # Check for the dealer's upcard being an Ace
         if dealer_hand[0][1] == 'A':

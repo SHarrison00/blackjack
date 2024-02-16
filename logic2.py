@@ -86,23 +86,3 @@ def ask_player_for_hit():
 
 def check_for_bust(hand_value):
     return hand_value > 21
-
-
-def determine_winner(player_hand, dealer_hand):
-    player_value = hand_value(player_hand)
-    dealer_value = hand_value(dealer_hand)
-
-    if check_for_blackjack(player_hand):
-        return RoundOutcome.PLAYER_BLACKJACK
-    elif check_for_blackjack(dealer_hand):
-        return RoundOutcome.DEALER_BLACKJACK
-    elif check_for_bust(player_value):
-        return RoundOutcome.DEALER_WIN
-    elif check_for_bust(dealer_value):
-        return RoundOutcome.PLAYER_WIN
-    elif player_value == dealer_value:
-        return RoundOutcome.PUSH
-    else:
-        return RoundOutcome.PLAYER_WIN if player_value > dealer_value else RoundOutcome.DEALER_WIN
-
-
