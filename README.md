@@ -1,18 +1,19 @@
 ## Project Description
 
-Sam ([@SHarrison00](https://github.com/SHarrison00)) and Conor ([@ConorHoughton2000](https://github.com/ConorHoughton2000)), lifelong friends, are collaborating on a project to create a quality Blackjack application, focusing on writing clean and maintainable code.
+This project contains the code for a Blackjack application, a collaboration between close friends Sam (@SHarrison00) and Conor (@ConorHoughton2000). The objectives of this project were to develop a simple Blackjack application in Python, with a focus on adhering to programming best practices and writing maintainable code.
 
-With over 3 years of Python experience, I (Sam) will be there to provide guidance and leadership, while Conor, who's new to Python, will be taking the lead in most of the development.
+The purpose of this project and collaboration was to offer mutual benefits. As a junior developer, Conor utilized this project to practice and improve his Python skills. Meanwhile, Sam, who has several years of experience in Python, served as a mentor to Conor, thereby further developing his own mentorship abilities.
 
-This partnership offers mutual benefits. Conor will gain valuable Python experience, while I will have the opportunity to share my knowledge and improve my mentoring skills. Driven by our shared passion for Blackjack, games, and data analytics, this project is a testament to our enduring friendship.
+To play the game yourself, check out this [Python Trinket](https://trinket.io/python3/d4e4779584?outputOnly=true&runOption=run).
 
-## Latest
+Game Preview:
 
-- Refactoring the codebase.
+![demo](https://s9.gifyu.com/images/SF90N.gif)
 
-- Discussing program flowcharts (see below).
+## How It Works
 
-![BlackJack Flowchart](https://github.com/SHarrison00/blackjack/assets/86479780/476e9e04-9b43-4d7e-9969-6da23ac0870b)
+To start a game of Blackjack, run the command `python main.py`, which calls the `start_game()` function in `game.py`. Each round, the `start_round()` function from `round.py` is invoked, and games continue until the player goes bankrupt or decides to end the game. All of Blackjack's logic is encapsulated in `logic.py`, containing the building blocks upon which the rest of the game is constructed.
+
 
 ## Authors
 
