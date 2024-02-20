@@ -87,6 +87,3 @@ def start_game():
         end_game_flag = ask_player_end_game()
         
     print("Thank you for playing!")
-
-if __name__ == "__main__":
-    start_game()

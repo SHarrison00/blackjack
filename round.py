@@ -84,7 +84,3 @@ def start_round():
         insurance_option = InsuranceOption.NO
         
     return (result, insurance_option)
-    
-if __name__ == "__main__":
-        result, insurance_option = start_round()
-        print("Round Result:", result, insurance_option)
