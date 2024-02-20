@@ -9,6 +9,12 @@ class RoundOutcome(Enum):
     PLAYER_BLACKJACK = "PLAYER_BLACKJACK"
     DEALER_BLACKJACK = "DEALER_BLACKJACK"
 
+
+class InsuranceOption(Enum):
+    YES = "YES"
+    NO = "NO"
+    
+
 def generate_deck():
     suits = ['Hearts', 'Spades', 'Diamonds', 'Clubs']
     ranks = [str(i) for i in range(2, 11)] + ['J', 'Q', 'K', 'A']
@@ -57,10 +63,6 @@ def draw_hand(deck):
 def check_for_blackjack(hand):
     return len(hand) == 2 and hand_value(hand) == 21
 
-
-class InsuranceOption(Enum):
-    YES = "YES"
-    NO = "NO"
 
 def offer_insurance():
     while True:

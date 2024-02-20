@@ -1,5 +1,5 @@
 import streamlit as st
-from logic2 import *
+from logic import *
 
 def start_game():
     deck = generate_deck()
