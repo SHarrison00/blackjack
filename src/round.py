@@ -1,4 +1,4 @@
-from logic import *
+from .logic import *
 import time
 
 def start_round():        
@@ -13,31 +13,33 @@ def start_round():
     print("Dealer's Hand:", [dealer_hand[0], '??'], "\n")
 
     result = None
-    insurance_option = None
+    insur_option = None
 
     if check_for_blackjack(player_hand):
         if check_for_blackjack(dealer_hand):
+            print("Dealer's Hand:", dealer_hand, "\n")
+            time.sleep(2.5)      
             print("Push! Both player and dealer have blackjack.")
             result = RoundOutcome.PUSH
         else:
             print("Player has blackjack! Player wins")
             result = RoundOutcome.PLAYER_BLACKJACK
-            return result, insurance_option
+        return (result, insur_option)
     else:
         # Check dealer's upcard is an Ace
         if dealer_hand[0][1] == 'A':
-            insurance_decision = offer_insurance()
-            if insurance_decision:
-                print("Insurance taken!")
-                insurance_option = InsuranceOption.YES
-                if check_for_blackjack(dealer_hand):
-                    print("Dealer has blackjack! Insurance payout.")
-                    result = RoundOutcome.DEALER_BLACKJACK
-                else:
-                    print("Dealer does not have blackjack. No insurance payout.")
-            else:
-                insurance_option = InsuranceOption.NO
+            insur_option = Insurance.YES if offer_insurance() else Insurance.NO
 
+            if check_for_blackjack(dealer_hand):
+                print("Dealer's Hand:", dealer_hand, "\n")
+                time.sleep(2.5)
+                print("Dealer has blackjack!\n")
+                result = RoundOutcome.DEALER_BLACKJACK
+                return (result, insur_option)
+            else:
+                time.sleep(1.5)
+                print("Dealer does not have blackjack.\n")
+                
     # Player's turn
     while ask_player_for_hit():
         player_hand.append(draw_card(deck))
@@ -80,7 +82,7 @@ def start_round():
             time.sleep(3)
             result = RoundOutcome.DEALER_WIN
     
-    if insurance_option is None:
-        insurance_option = InsuranceOption.NO
+    if insur_option is None:
+        insur_option = Insurance.NO
         
-    return (result, insurance_option)
+    return (result, insur_option)
