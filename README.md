@@ -1,6 +1,6 @@
 ## Project Description
 
-This project contains the code for a Blackjack application, a collaboration between close friends Sam ([@SHarrison00](https://github.com/SHarrison00)) and Conor ([@ConorHoughton2000](https://github.com/ConorHoughton2000)). The objectives of this project were to develop a simple Blackjack Python application, with a focus on adhering to programming best practices and writing maintainable code.
+This project contains the code for a Blackjack Python application, a collaboration between close friends Sam ([@SHarrison00](https://github.com/SHarrison00)) and Conor ([@ConorHoughton2000](https://github.com/ConorHoughton2000)). The objectives of this project were to develop a simple Blackjack application, with a focus on adhering to programming best practices and writing maintainable code.
 
 The purpose of this project and collaboration was to offer mutual benefits. As a junior developer, Conor utilized this project to practice and improve his Python skills. Meanwhile, Sam, who has several years of experience in Python, served as a mentor to Conor, thereby further developing his own mentorship abilities.
 
