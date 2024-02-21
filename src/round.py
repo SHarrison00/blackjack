@@ -16,9 +16,9 @@ def start_round():
     insur_option = None
 
     if check_for_blackjack(player_hand):
-        if check_for_blackjack(dealer_hand):
-            print("Dealer's Hand:", dealer_hand, "\n")
-            time.sleep(2.5)      
+        print("Dealer's Hand:", dealer_hand, "\n")
+        time.sleep(2.5) 
+        if check_for_blackjack(dealer_hand):   
             print("Push! Both player and dealer have blackjack.")
             result = RoundOutcome.PUSH
         else:
